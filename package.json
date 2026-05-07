@@ -1,5 +1,5 @@
 {
-  "name": "nexaflow-ai-landing",
+  "name": "nexaflow-ai",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -16,7 +16,6 @@
     "clsx": "latest",
     "lucide-react": "latest",
     "next": "latest",
-    "next-themes": "latest",
     "react": "latest",
     "react-dom": "latest",
     "tailwind-merge": "latest",
