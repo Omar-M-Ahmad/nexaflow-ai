@@ -1,28 +1,14 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Cairo, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
-import { ThemeProvider } from "@/components/layout/theme-provider";
+import { ThemeProvider, type Theme } from "@/components/layout/theme-provider";
 import { getDirection, isLocale, type Locale } from "@/i18n/config";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const cairo = Cairo({ subsets: ["arabic", "latin"], variable: "--font-cairo" });
-
-const themeInitScript = `
-(function () {
-  try {
-    var storedTheme = window.localStorage.getItem("nexaflow-theme");
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var theme = storedTheme === "light" || storedTheme === "dark" ? storedTheme : prefersDark ? "dark" : "light";
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    document.documentElement.style.colorScheme = theme;
-  } catch (_) {
-    document.documentElement.classList.add("dark");
-    document.documentElement.style.colorScheme = "dark";
-  }
-})();
-`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nexaflow-ai.example.com"),
@@ -42,6 +28,10 @@ export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ar" }];
 }
 
+function resolveTheme(value?: string): Theme {
+  return value === "light" ? "light" : "dark";
+}
+
 export default async function LocaleLayout({ children, params }: Readonly<{ children: ReactNode; params: Promise<{ locale: string }> }>) {
   const { locale } = await params;
 
@@ -50,14 +40,20 @@ export default async function LocaleLayout({ children, params }: Readonly<{ chil
   }
 
   const currentLocale = locale as Locale;
+  const cookieStore = await cookies();
+  const initialTheme = resolveTheme(cookieStore.get("nexaflow-theme")?.value);
 
   return (
-    <html lang={currentLocale} dir={getDirection(currentLocale)} data-scroll-behavior="smooth" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
+    <html
+      lang={currentLocale}
+      dir={getDirection(currentLocale)}
+      data-scroll-behavior="smooth"
+      className={initialTheme === "dark" ? "dark" : undefined}
+      style={{ colorScheme: initialTheme }}
+      suppressHydrationWarning
+    >
       <body className={`${inter.variable} ${cairo.variable} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
       </body>
     </html>
   );
