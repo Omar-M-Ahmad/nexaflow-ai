@@ -21,10 +21,11 @@ function getLocalizedPath(pathname: string, locale: Locale) {
 export function LanguageSwitcher({ locale, label }: { locale: Locale; label: string }) {
   const pathname = usePathname();
   const nextLocale = locale === "ar" ? "en" : "ar";
+  const href = { pathname: getLocalizedPath(pathname, nextLocale) };
 
   return (
     <Button asChild type="button" variant="ghost" size="sm" aria-label={label} className="w-9 px-0">
-      <Link href={getLocalizedPath(pathname, nextLocale)}>
+      <Link href={href}>
         <Languages className="size-4" />
       </Link>
     </Button>
