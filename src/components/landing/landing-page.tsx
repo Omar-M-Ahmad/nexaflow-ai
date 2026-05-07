@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Dictionary } from "@/i18n/get-dictionary";
 import { type Locale } from "@/i18n/config";
+import { localizedRoute } from "@/i18n/routes";
 
 const problemIcons = [MessageSquare, Shield, Users, Target];
 const workflowIcons = [FileText, Sparkles, GitBranch, CheckCircle2];
@@ -69,7 +70,7 @@ function HeroSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <Button asChild size="lg">
-                <Link href={`/${locale}/signup`}>
+                <Link href={localizedRoute(locale, "/signup")}>
                   {dict.hero.primaryCta}
                   <ArrowRight className="size-4 rtl:rotate-180" />
                 </Link>
@@ -405,7 +406,7 @@ function FinalCtaSection({ locale, dict }: { locale: Locale; dict: Dictionary })
         <h2 className="text-4xl font-bold tracking-tight md:text-5xl">{dict.finalCta.title}</h2>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">{dict.finalCta.description}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button asChild size="lg"><Link href={`/${locale}/signup`}>{dict.finalCta.primaryCta}<ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
+          <Button asChild size="lg"><Link href={localizedRoute(locale, "/signup")}>{dict.finalCta.primaryCta}<ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
           <Button size="lg" variant="outline">{dict.finalCta.secondaryCta}</Button>
         </div>
       </div>

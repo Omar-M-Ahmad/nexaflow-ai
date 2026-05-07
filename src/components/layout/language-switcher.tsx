@@ -8,7 +8,13 @@ import { type Locale } from "@/i18n/config";
 
 function getLocalizedPath(pathname: string, locale: Locale) {
   const segments = pathname.split("/").filter(Boolean);
+
+  if (segments.length === 0) {
+    return `/${locale}`;
+  }
+
   segments[0] = locale;
+
   return `/${segments.join("/")}`;
 }
 

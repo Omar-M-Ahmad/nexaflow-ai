@@ -6,6 +6,7 @@ import { type Locale } from "@/i18n/config";
 import { type Dictionary } from "@/i18n/get-dictionary";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { localizedRoute } from "@/i18n/routes";
 
 export function AuthShell({ locale, dict, mode }: { locale: Locale; dict: Dictionary; mode: "signin" | "signup" }) {
   const isSignIn = mode === "signin";
@@ -16,7 +17,7 @@ export function AuthShell({ locale, dict, mode }: { locale: Locale; dict: Dictio
       <div className="container-x flex min-h-screen flex-col py-6">
         <header className="flex items-center justify-between gap-4">
           <Button asChild variant="ghost" size="sm">
-            <Link href={`/${locale}`}>
+            <Link href={localizedRoute(locale)}>
               <ArrowIcon className="size-4" />
               {dict.auth.backHome}
             </Link>
@@ -99,7 +100,7 @@ export function AuthShell({ locale, dict, mode }: { locale: Locale; dict: Dictio
 
             <p className="mt-8 text-center text-sm text-muted-foreground">
               {isSignIn ? dict.auth.noAccount : dict.auth.hasAccount}{" "}
-              <Link href={`/${locale}/${isSignIn ? "signup" : "signin"}`} className="font-semibold text-primary hover:text-primary/80">
+              <Link href={localizedRoute(locale, isSignIn ? "/signup" : "/signin")} className="font-semibold text-primary hover:text-primary/80">
                 {isSignIn ? dict.auth.createAccount : dict.auth.backToSignIn}
               </Link>
             </p>

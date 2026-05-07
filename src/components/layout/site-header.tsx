@@ -9,6 +9,7 @@ import { Logo } from "@/components/layout/logo";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { cn } from "@/lib/utils";
 import { type Locale } from "@/i18n/config";
+import { localizedRoute } from "@/i18n/routes";
 
 type HeaderDictionary = {
   nav: {
@@ -58,10 +59,10 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: HeaderDicti
             <LanguageSwitcher locale={locale} label={dict.common.switchLanguage} />
             <ThemeToggle label={dict.common.toggleTheme} />
             <Button asChild variant="ghost" size="sm">
-              <Link href={`/${locale}/signin`}>{dict.nav.signIn}</Link>
+              <Link href={localizedRoute(locale, "/signin")}>{dict.nav.signIn}</Link>
             </Button>
             <Button asChild size="sm">
-              <Link href={`/${locale}/signup`}>{dict.nav.startFree}</Link>
+              <Link href={localizedRoute(locale, "/signup")}>{dict.nav.startFree}</Link>
             </Button>
           </div>
 
@@ -101,10 +102,10 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: HeaderDicti
               ))}
               <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border pt-3">
                 <Button asChild variant="outline" size="sm">
-                  <Link href={`/${locale}/signin`}>{dict.nav.signIn}</Link>
+                  <Link href={localizedRoute(locale, "/signin")}>{dict.nav.signIn}</Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href={`/${locale}/signup`}>{dict.nav.startFree}</Link>
+                  <Link href={localizedRoute(locale, "/signup")}>{dict.nav.startFree}</Link>
                 </Button>
               </div>
             </nav>
